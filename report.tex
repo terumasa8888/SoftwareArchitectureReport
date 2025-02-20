@@ -1,0 +1,393 @@
+\documentclass[dvipdfmx,fleqn,article]{jlreq}
+\usepackage{graphicx}
+\usepackage{bxtexlogo}
+\usepackage{fancyhdr} % ヘッダーとフッターのカスタマイズ用
+\usepackage{amsmath} % Add this line to include the amsmath package
+\usepackage{placeins} 
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstdefinelanguage{CSharp}{
+  morekeywords={abstract, event, new, struct, as, explicit, null, switch, base, extern, object, this, bool, false, operator, throw, break, finally, out, true, byte, fixed, override, try, case, float, params, typeof, catch, for, private, uint, char, foreach, protected, ulong, checked, goto, public, unchecked, class, if, readonly, unsafe, const, implicit, ref, ushort, continue, in, return, using, decimal, int, sbyte, virtual, default, interface, sealed, volatile, delegate, internal, short, void, do, is, sizeof, while, double, lock, stackalloc, else, long, static, enum, namespace, string},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  morestring=[b]"""
+}
+
+\lstset{
+  language=CSharp,
+  basicstyle=\ttfamily\footnotesize,
+  commentstyle=\color{gray},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,
+  tabsize=2,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false,
+  escapeinside={(*@}{@*)}
+}
+
+\title{ソフトウェアアーキテクチャ 特論 期末レポート}
+\author{M24J4045A 中邑熙正}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty} % 表紙にページ番号を表示しない
+
+\section{はじめに}
+\subsection{レポートの目的}
+このレポートでは、ソフトウェアアーキテクチャ特論の授業で学んだ知識をもとに、
+Webアプリケーションとゲームの両方に適用し、その適用事例を整理することである。
+\subsection{開発したソフトウェアの概要}
+\subsubsection{Webアプリケーション}
+今回作成したのはn年日記というWebアプリケーションである。
+n年日記は、ユーザが日記を書くことができるWebアプリケーションである。
+n年日記の開発に当たって、10年日記というアプリケーションを参考にした。
+10年日記とは～～アプリケーションである。
+通常の日記アプリケーションと異なり、n年日記はその日付の未来の日記を一覧表示することができる。
+例えば、2021年1月1日の日記を書くと、2022年1月1日、2023年1月1日、・・・、
+2030年1月1日の日記も一覧表示される。
+しかし10年日記を利用していて感じた不便な点として、その日付の過去の日記ではなく、
+未来の日記が一覧表示される点があった。
+そのためn年日記では、その日付の過去の日記が一覧表示されるように改良したアプリケーションを作成した。
+
+\subsubsection{ゲーム}
+今回扱うゲームは、増殖する細菌・微生物たちを操作して、敵の微生物を倒す2Dアクションゲームである。
+以前から個人開発していたものであり、
+今回はこのゲームをソフトウェアアーキテクチャ
+の観点から再設計する。
+
+\section{Ruby on Rails}
+n年日記の開発では、フレームワークにRuby on Railsを用いている。
+以下に、Ruby on Railsの概要と特徴について説明する。
+Ruby on Railsは、Webアプリケーションフレームワークの一つである。
+Ruby on Railsは、Rubyというプログラミング言語で書かれており、
+MVC（Model-View-Controller）アーキテクチャを採用している。
+Ruby on Railsは、Convention over Configuration（規約より設定）という設計方針を持っており、
+開発者が設定を行う必要がある部分を減らすことで、開発効率を向上させている。
+また、DRY（Don't Repeat Yourself）の原則に基づいており、同じコードを繰り返さないようにすることで、
+保守性を高めている。
+以下に、Ruby on Railsをソフトウェアアーキテクチャの観点から解説する。
+\subsection{MVCアーキテクチャ}
+Ruby on RailsのMVC構造について。
+データの流れを図示する。
+デザインパターンの集合体。
+\subsection{Convention over Configuration（規約より設定）}
+Ruby on Railsの「規約に従うことで設定を減らす」設計方針について。
+\subsection{DRY（Don't Repeat Yourself）の原則}
+同じコードを繰り返さないようにする原則について。
+\subsection{マイグレーション}
+マイグレーションとは、データベースのスキーマを変更するための仕組みである。
+マイグレーションを用いることで、データベースのバージョン管理を行うことができる。
+カプセル化の概念に基づいている。
+\subsection{Active Record}
+Active Recordとは、Ruby on RailsのMVCアーキテクチャの中のModelに相当する部分である。
+Active Recordは、データベースとのやり取りを行うためのクラスであり、
+データベースのテーブルと1対1で対応している。
+Active Recordを用いることで、データベースの操作を簡単に行うことができる。
+DBとのやり取りを抽象化することで、データベースの変更に強くなる。
+
+
+
+
+
+\section{Webアプリケーション n年日記}
+n年日記の開発では、フレームワークにRuby on Rails、データベースにMySQLを用いた。
+デザインにはcssを用いている。
+
+
+\subsection{設計}
+システム構成図
+シーケンス図、クラス図など
+モデルとしてDiaryEntryクラス、コントローラーとしてDiaryEntryControllerクラス。
+その他Viewなど。
+
+\subsection{実装}
+実際のコードを示す。
+日記画面のスクショなど
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{ゲーム}
+ゲームエンジンであるUnityとC\#を用いて開発した。
+
+\subsection{設計}
+ソフトウェアアーキテクチャの設計原則に基づいて、ゲームの設計を行うにあたって、
+今回はGoFの23種類のデザインパターンの中から、StrategyパターンとObserverパターンを適用した。
+\subsubsection{Strategyパターン}
+Strategyパターンとは、アルゴリズムを切り替えることができるようにするためのデザインパターンである。
+Strategyパターンを用いることで、アルゴリズムの切り替えを容易に行うことができる。
+このゲームでは、敵キャラクターごとに異なる攻撃パターンを持っている。
+例えば、プレイヤーに体当たりした時にダメージを与えるだけの敵キャラクターと、
+爆発を起こしてプレイヤーにダメージを与える敵キャラクターがいる。
+Strategyパターンを用いることで、敵キャラクターごとに異なる攻撃パターンを実装することができる。
+ここでは、Strategyパターンを用いて敵キャラクターの攻撃パターンを実装する方法を説明する。
+
+インターフェースAtttackBehaviorを定義
+それを実装したクラスNormalAttack, ExplosionAttackを作成
+敵キャラクタークラスにAttackBehavior attackBehaviourを持たせる
+そして attackBehaviourのAttackメソッドを呼び出す
+これにより、敵キャラクターごとに異なる攻撃パターンを実装することができる。
+attackBehaviourの中身が変わることで、敵キャラクターの攻撃パターンを変更することができる。
+これによりポリモーフィズムを実現する。
+
+クラス図を示す。
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{}
+%     \caption{Strategyパターンのクラス図}
+%     \label{fig:strategy_pattern_class_diagram}
+% \end{figure}
+
+
+\subsubsection{Observerパターン}
+Observerパターンとは、オブジェクトの状態変化を他のオブジェクトに通知するためのデザインパターンである。
+Observerパターンを用いることで、オブジェクト間の依存関係を減らすことができる。
+
+Observerパターンの例を図として示す。
+
+このゲームでは、プレイヤー側のキャラクターは選択して動かせる。
+しかし、選択されているキャラクターの中で、あるキャラクターが死んでしまった場合、
+その集団を移動させる時にnullを参照してしまい、エラーが発生してしまう。
+そのため、そのキャラクターを即座に配列から削除する処理を実装しなければならない。
+そこで、Observerパターンを用いて、キャラクターの死亡イベントを購読することで、
+死亡したキャラクターを配列から削除する処理を実装する。
+
+ここでシーケンス図を示す。
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{}
+%     \caption{Observerパターンのシーケンス図}
+%     \label{fig:observer_pattern_sequence_diagram}
+% \end{figure}
+
+コードを用いて説明する。
+まずキャラクターの死亡イベントを購読する。
+C\#では、Subjectクラスが定義されている。
+Subjectクラスは、ObserverパターンのSubjectに相当するクラスであり、
+キャラクターの死亡イベントを購読するためのメソッドを持っている。
+キャラクターのHPが0になると、死亡イベントが発行される。
+するとオブザーバに死亡イベントが通知され、
+オブザーバはそのキャラクターを配列から削除する処理を行う。
+
+\subsubsection{Stateパターン}
+
+
+
+\subsection{実装}
+実際のコードを示す。
+ゲーム画面のスクショなど
+
+\subsubsection{Strategyパターンの実装}
+以下に、Strategyパターンを用いた敵キャラクターの攻撃パターンの実装例を示す。
+
+\begin{lstlisting}[language=CSharp, caption=Strategyパターンの実装例]
+// インターフェースの定義
+public interface IAttackBehavior {
+    void Attack();
+}
+
+// NormalAttackクラスの実装
+public class NormalAttack : IAttackBehavior {
+    public void Attack() {
+        // 通常攻撃の実装
+        Console.WriteLine("Normal Attack!");
+    }
+}
+
+// ExplosionAttackクラスの実装
+public class ExplosionAttack : IAttackBehavior {
+    public void Attack() {
+        // 爆発攻撃の実装
+        Console.WriteLine("Explosion Attack!");
+    }
+}
+
+// 敵キャラクタークラスの実装
+public class Enemy {
+    private IAttackBehavior attackBehavior;
+
+    public Enemy(IAttackBehavior attackBehavior) {
+        this.attackBehavior = attackBehavior;
+    }
+
+    public void PerformAttack() {
+        attackBehavior.Attack();
+    }
+
+    public void SetAttackBehavior(IAttackBehavior attackBehavior) {
+        this.attackBehavior = attackBehavior;
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Observerパターンの実装}
+以下に、Observerパターンを用いたキャラクターの死亡イベントの実装例を示す。
+
+\begin{lstlisting}[language=CSharp, caption=Observerパターンの実装例]
+
+    /// <summary>
+    /// キャラクターのステータスを管理するクラス
+    /// </summary>
+    public class Status : MonoBehaviour, IStatus
+    {
+        [SerializeField] private CharacterData characterData;
+        [SerializeField] private ParticleSystem deadEffect;
+    
+        public ReactiveProperty<int> Hp { get; private set; }
+    
+        // キャラクターが死んだことを通知するイベント
+        public IObservable<Unit> OnDie => onDie;
+        private Subject<Unit> onDie = new Subject<Unit>();
+    
+        //ステータスの初期化
+        void Awake()
+        {
+            Hp = new ReactiveProperty<int>(characterData.Hp);//ReactivePropertyを使う必要性
+        }
+
+        public virtual void TakeDamage(int amount, string attackerTag)
+        {
+            Hp.Value -= amount;
+            if (Hp.Value <= 0)
+            {
+                Die();
+            }
+        }
+    
+        protected virtual void Die()
+        {
+            Instantiate(deadEffect, transform.position, Quaternion.identity);
+            onDie.OnNext(Unit.Default); // 死亡イベントを発行
+            onDie.OnCompleted(); // イベントの完了を通知
+            Destroy(gameObject);
+        }
+    }
+
+/// <summary>
+/// プレイヤーが選択したキャラクターを操作するクラス
+/// </summary>
+public class PlayerCommand : MonoBehaviour {
+    private ReactiveCollection<GameObject> selectedCharacters 
+        = new ReactiveCollection<GameObject>();
+    private Dictionary<GameObject, IDisposable> characterSubscriptions 
+        = new Dictionary<GameObject, IDisposable>();
+    [SerializeField] private float selectionRadius = 2f;
+
+
+    /// 中略
+
+
+    /// <summary>
+    /// クリック位置付近のキャラクターを選択して停止させるメソッド
+    /// </summary>
+    private void SelectCharactersInRadius(Vector3 mousePosition, Vector3 worldPosition){
+
+        GameObject[] characters = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject character in characters)
+        {
+            float distance = Vector3.Distance(character.transform.position, worldPosition);
+            if (distance > selectionRadius) continue;
+
+            Status status = character.GetComponent<Status>();
+            if (status == null) continue;
+
+            selectedCharacters.Add(character);
+
+            // 選択されたキャラクターのスプライトを表示
+            var indicator = character.GetComponent<SelectionIndicator>();
+            if (indicator != null)
+            {
+                indicator.Show();
+            }
+
+
+
+
+
+
+            // 選択範囲内のキャラクター数の変化を把握するために死亡イベントを購読
+            if (!characterSubscriptions.ContainsKey(character))
+            {
+                (*@\textcolor{red}{var subscription = status.OnDie}@*)
+                    (*@\textcolor{red}{.Subscribe(\_ =>\{ }@*)
+                        (*@\textcolor{red}{selectedCharacters.Remove(character);}@*)
+                        (*@\textcolor{red}{Debug.Log("キャラクターが死んだため、selectedCharactersから削除しました。");}@*)
+                        (*@\textcolor{red}{characterSubscriptions.Remove(character);}@*)
+                    (*@\textcolor{red}{\})}@*)
+                    (*@\textcolor{red}{.AddTo(this);}@*)
+
+
+                characterSubscriptions[character] = subscription;
+            }
+
+            //キャラクターを停止
+            Rigidbody2D rb = character.GetComponent<Rigidbody2D>();
+            if (rb == null) continue;
+            rb.velocity = Vector2.zero;
+
+            status.SetState(PlayerState.Selected);
+        }
+    }
+}
+
+\subsubsection{Stateパターンの実装}
+
+\end{lstlisting}
+
+\section{まとめ}
+レポートの総括
+今後の課題や展望
+
+\section{感想}
+この授業で学んだことを活かしつつ、新たな設計手法を学ぶことで技術を磨き、今後の開発に生かしていきたい。
+きれいなプログラムを書けるようになりたい。
+
+\section{参考文献}
+\begin{thebibliography}{9}
+    \bibitem{book1} 
+    著者名, Head First デザインパターン, 出版社, 出版年.
+
+    \bibitem{article1} 
+    著者名, 「論文タイトル」, 雑誌名, 巻(号), ページ, 出版年.
+
+    \bibitem{website1} 
+    著者名, 「記事タイトル」, URL, アクセス日.
+\end{thebibliography}
+
+\end{document}
