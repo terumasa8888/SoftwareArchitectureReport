@@ -1,0 +1,27 @@
+@startuml Observer
+participant PlayerCommand
+participant Status
+
+PlayerCommand -> PlayerCommand: ProcessMouseClick()
+activate PlayerCommand
+
+PlayerCommand -> Status: Subscribe to OnDie event
+activate Status
+
+opt Player takes damage
+    Status -> Status: TakeDamage()
+    activate Status
+end
+
+opt Hp <= 0
+    Status -> Status: Die()
+    activate Status
+    Status -> PlayerCommand: OnDie event
+    PlayerCommand -> PlayerCommand: Remove character from selectedCharacters
+    Status -> Status: Destroy(character)
+    deactivate Status
+end
+
+deactivate Status
+deactivate PlayerCommand
+@enduml

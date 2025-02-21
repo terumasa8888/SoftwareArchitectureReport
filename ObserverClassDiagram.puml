@@ -1,0 +1,34 @@
+@startuml ObserverClassDiagram
+
+skinparam class {
+    FontSize 40
+    AttributeIconSize 0
+}
+
+skinparam DefaultFontSize 40
+
+skinparam ArrowColor black
+skinparam ArrowThickness 4
+
+class PlayerCommand {
+    - ReactiveCollection<GameObject> selectedCharacters
+    - Dictionary<GameObject, IDisposable> characterSubscriptions
+    - Vector3 destination
+    - float selectionRadius
+    + void Start()
+    + void ProcessMouseClick()
+    + void SelectCharactersInRadius(Vector3 mousePosition, Vector3 worldPosition)
+}
+
+class Status {
+    -int hp
+    -int attack
+    +int Hp { get; private set }
+    +int Attack { get; private set }
+    +IObservable<Unit> OnDie { get; }
+    +void TakeDamage(int amount, string attackerTag)
+    - void Die()
+}
+
+PlayerCommand "1" --> "*" Status : has
+@enduml

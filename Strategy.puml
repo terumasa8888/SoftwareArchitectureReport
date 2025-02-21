@@ -1,0 +1,72 @@
+@startuml Strategy
+
+skinparam class {
+    FontSize 40
+    AttributeIconSize 0
+}
+
+skinparam DefaultFontSize 40
+
+skinparam ArrowColor black
+skinparam ArrowThickness 4
+
+interface IAttackBehaviour {
+    +void Attack(Status status)
+}
+
+abstract class CharacterBase {
+    #IAttackBehaviour attackBehaviour
+    -Status status
+    #void Awake()
+    #void InitializeAttackBehaviour(Status status)
+    #void OnCollisionEnter2D(Collision2D collision)
+    +void SetAttackBehaviour(IAttackBehaviour attackBehaviour)
+}
+
+class Saru {
+    +void InitializeAttackBehaviour(Status status)
+}
+
+class Pirori {
+    +void InitializeAttackBehaviour(Status status)
+}
+
+class NormalAttack {
+    -int attackPower
+    -GameObject attacker
+    +NormalAttack(int attackPower, GameObject attacker)
+    +void Attack(Status targetStatus)
+}
+
+class ExplosionAttack {
+    -GameObject explosionEffect
+    -Status attackerStatus
+    -const string explosionEffectAddress
+    +ExplosionAttack(Status attackerStatus)
+    -void LoadExplosionEffect()
+    -void OnExplosionEffectLoaded(AsyncOperationHandle<GameObject> obj)
+    +void Attack(Status targetStatus)
+}
+
+class Status {
+    -int hp
+    -int attack
+    +int Hp { get; private set }
+    +int Attack { get; private set }
+    +void TakeDamage(int amount, string attackerTag)
+}
+
+class MonoBehaviour {
+}
+
+CharacterBase <|-- Saru : extends
+CharacterBase <|-- Pirori : extends
+IAttackBehaviour <|.. NormalAttack : implements
+IAttackBehaviour <|.. ExplosionAttack : implements
+IAttackBehaviour <-- CharacterBase : has
+Status <-- CharacterBase : has
+MonoBehaviour <|-- CharacterBase : extends
+MonoBehaviour <|-- Status : extends
+
+@enduml
+
